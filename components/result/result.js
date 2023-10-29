@@ -14,7 +14,7 @@ export function Result(props) {
         };
     });
 
-    if (props.queryed && !props.groups.length) {
+    if (props.queryed && !props.loading && !props.groups.length) {
         return html`
             <div class="results">
                 <p class="empty">No DNS record found.</p>
@@ -50,6 +50,7 @@ export function Result(props) {
                                             </span>
                                         `)}
                                     </span>
+                                    ${i !== group.paths.length - 1 && html`<span class="path-join">👉</span>`}
                                 `)}
                             </div>
                         </li>
@@ -57,7 +58,13 @@ export function Result(props) {
                             <div class="left">Server</div>
                             <div class="right">
                                 ${group.servers.map((item) => html`
-                                    <a class="server-item" key=${item} target="_blank" href=${DOH_JSON_SERVERS[item].website}>${item}</a>
+                                    <a
+                                        class="server-item"
+                                        key=${item}
+                                        target="_blank"
+                                        href=${DOH_JSON_SERVERS[item].website}
+                                        style="background-color: ${DOH_JSON_SERVERS[item].color}"
+                                    >${item}</a>
                                 `)}
                             </div>
                         </li>

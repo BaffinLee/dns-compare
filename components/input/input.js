@@ -22,6 +22,7 @@ export function Input(props) {
             onInput=${handleInput}
             onKeyDown=${handleKeyDown}
             value=${props.value}
+            class="name-input"
         />
     `;
 }

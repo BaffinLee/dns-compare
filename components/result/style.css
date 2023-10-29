@@ -1,0 +1,76 @@
+.results {
+
+}
+
+.results .empty {
+    text-align: center;
+    color: #666;
+    margin-top: 100px;
+}
+
+.result-item {
+    margin-top: 20px;
+    border-radius: 8px;
+    padding: 16px 24px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+}
+
+.results ul {
+    margin: 0;
+    padding: 0;
+}
+
+.result-item .ips li {
+    margin-bottom: 4px;
+    background-color: #f5f5f5;
+    width: fit-content;
+    padding: 2px 10px;
+    border-radius: 14px;
+    line-height: 28px;
+    font-size: 24px;
+    color: #000;
+}
+
+.result-item .info {
+    margin-top: 20px;
+}
+
+.result-item .info li {
+    display: flex;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.result-item .info li .left {
+    flex: 0 0 60px;
+    width: 60px;
+    margin-left: 6px;
+}
+
+.result-item .path-join {
+    margin-right: 4px;
+}
+
+.result-item .server-item,
+.result-item .path-item {
+    background-color: #f5f5f5;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    line-height: 20px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.result-item .server-item,
+.result-item .path-item a {
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.result-item .server-item:hover,
+.result-item .path-item a:hover {
+    color: #3b82f6;
+}

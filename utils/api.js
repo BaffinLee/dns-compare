@@ -5,31 +5,37 @@ export const DOH_JSON_SERVERS = {
         name: 'Cloudflare',
         api: 'https://1.0.0.1/dns-query',
         website: 'https://1.1.1.1',
+        color: '#ffeed9',
     },
     Google: {
         name: 'Google',
         api: 'https://8.8.4.4/resolve',
         website: 'https://dns.google',
+        color: '#d9e7ff',
     },
     AliDNS: {
         name: 'AliDNS',
         api: 'https://223.5.5.5/resolve',
         website: 'https://alidns.com',
+        color: '#ffe4d9',
     },
     Rubyfish: {
         name: 'Rubyfish',
         api: 'https://dns.rubyfish.cn/dns-query',
         website: 'https://rubyfish.cn/dns-query',
+        color: '#ffd9e7',
     },
     'DNS.SB': {
         name: 'DNS.SB',
         api: 'https://doh.dns.sb/dns-query',
         website: 'https://dns.sb/doh',
+        color: '#e8d9ff',
     },
     'TWNIC': {
         name: 'TWNIC',
         api: 'https://dns.twnic.tw/dns-query',
         website: 'https://twnic.tw',
+        color: '#f2ffd9',
     },
 };
 
@@ -41,18 +47,25 @@ export const DOH_JSON_SERVERS = {
  */
 export function dnsQuery(name, type) {
     const nameTrimed = name.replace(/\s/g, '');
-    if (!nameTrimed) return [];
+    if (!nameTrimed) return Promise.resolve([]);
     const asciiName = /^[0-9a-z\-\.]+$/.test(nameTrimed) ? nameTrimed : punycode.toASCII(nameTrimed);
     const nameEncoded = encodeURIComponent(asciiName);
     return Promise.all(Object.values(DOH_JSON_SERVERS).map(async server => {
+        const controller = new AbortController();
+        const timer = setTimeout(() => {
+            controller.abort();
+        }, 5000);
         try {
             const data = await fetch(`${server.api}?name=${nameEncoded}&type=${type}`, {
                 headers: {
                     accept: 'application/dns-json',
                 },
+                signal: controller.signal,
             }).then(res => res.json());
+            clearTimeout(timer);
             return { server: server.name, data };
         } catch (err) {
+            clearTimeout(timer);
             console.error(err);
             return null;
         }

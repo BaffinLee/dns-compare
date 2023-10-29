@@ -5,6 +5,7 @@ import { Input } from '../input/input.js';
 import { Result } from '../result/result.js';
 import { Type } from '../type/type.js';
 import { dnsQuery } from '../../utils/api.js';
+import { Loading } from '../loading/loading.js';
 
 const html = htm.bind(h);
 
@@ -18,6 +19,7 @@ export function App () {
     const queryDns = useCallback((newType) => {
         if (loading) return;
         setLoading(true);
+        setGroups([]);
         dnsQuery(name, newType || type).then(res => {
             setLoading(false);
             setGroups(res);
@@ -46,12 +48,13 @@ export function App () {
                 <span> Compare</span>
             </h1>
             <p class="description">
-                <span>Compare A/AAAA DNS record for any domain in your browser by </span>
+                <span>Compare A/AAAA DNS record in your browser by </span>
                 <a href="https://developers.google.com/speed/public-dns/docs/doh/json" target="_blank">DoH JSON API.</a>
             </p>
             <${Input} value=${name} onChange=${handleNameChange} onEnter=${queryDns} />
             <${Type} value=${type} groups=${groups} onChange=${handleTypeChange} />
-            <${Result} groups=${groups} queryed=${queryed} />
+            ${loading && html`<${Loading} />`}
+            <${Result} groups=${groups} queryed=${queryed} loading=${loading} />
         </div>
     `;
 }

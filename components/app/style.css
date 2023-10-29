@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #3b82f6;
+}
+
+#app {
+    padding: 0 10px 20px 10px;
+}
+
+.container {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.container h1 {
+    margin-top: 160px;
+    margin-bottom: 10px;
+    font-size: 48px;
+    text-align: center;
+}
+
+.container h1 .colorful {
+    background: #06b6d4;
+    background: linear-gradient(to left, #06b6d4 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.container .description {
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+}
