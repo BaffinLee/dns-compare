@@ -13,6 +13,7 @@ export function App () {
     const [type, setType] = useState('A');
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [queryed, setQueryed] = useState(false);
 
     const queryDns = useCallback((newType) => {
         if (loading) return;
@@ -20,11 +21,14 @@ export function App () {
         dnsQuery(name, newType || type).then(res => {
             setLoading(false);
             setGroups(res);
+            setQueryed(true);
         }).catch(err => {
             setLoading(false);
+            setGroups([]);
+            setQueryed(true);
             console.error(err);
         });
-    }, [name, type, loading, setGroups, setLoading]);
+    }, [name, type, loading, setGroups, setLoading, setQueryed]);
 
     const handleNameChange = useCallback((newName) => {
         setName(newName);
@@ -47,7 +51,7 @@ export function App () {
             </p>
             <${Input} value=${name} onChange=${handleNameChange} onEnter=${queryDns} />
             <${Type} value=${type} groups=${groups} onChange=${handleTypeChange} />
-            <${Result} groups=${groups} />
+            <${Result} groups=${groups} queryed=${queryed} />
         </div>
     `;
 }

@@ -1,6 +1,6 @@
 import punycode from 'https://esm.sh/punycode@2.3.0';
 
-const DOH_JSON_SERVERS = {
+export const DOH_JSON_SERVERS = {
     Cloudflare: {
         name: 'Cloudflare',
         api: 'https://1.0.0.1/dns-query',
@@ -76,6 +76,7 @@ export function dnsQuery(name, type) {
 function analyzeDnsAnswers(answers, question) {
     const removeDot = (str) => str.replace(/\.$/, '');
     const map = answers.reduce((res, item) => {
+        if (![1, 5, 28, 39].includes(item.type)) return res;
         const name = removeDot(item.name);
         if (!res[name]) res[name] = [];
         res[name].push(item);
