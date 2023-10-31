@@ -15,7 +15,7 @@ export const DOH_JSON_SERVERS = {
     },
     AliDNS: {
         name: 'AliDNS',
-        api: 'https://223.5.5.5/resolve',
+        api: 'https://223.6.6.6/resolve',
         website: 'https://alidns.com',
         color: '#ffe4d9',
     },
