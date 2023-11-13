@@ -1,11 +1,12 @@
 import { h } from 'https://esm.sh/preact@10.18.1';
-import { useState, useCallback } from 'https://esm.sh/preact@10.18.1/hooks';
+import { useState, useCallback, useEffect } from 'https://esm.sh/preact@10.18.1/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
 import { Input } from '../input/input.js';
 import { Result } from '../result/result.js';
 import { Type } from '../type/type.js';
 import { dnsQuery } from '../../utils/api.js';
 import { Loading } from '../loading/loading.js';
+import { getUrlQuery, setUrlQuery } from '../../utils/url.js';
 
 const html = htm.bind(h);
 
@@ -16,11 +17,11 @@ export function App () {
     const [loading, setLoading] = useState(false);
     const [queryed, setQueryed] = useState(false);
 
-    const queryDns = useCallback((newType) => {
+    const queryDns = useCallback((newType, newName) => {
         if (loading) return;
         setLoading(true);
         setGroups([]);
-        dnsQuery(name, newType || type).then(res => {
+        dnsQuery(newName || name, newType || type).then(res => {
             setLoading(false);
             setGroups(res);
             setQueryed(true);
@@ -30,6 +31,7 @@ export function App () {
             setQueryed(true);
             console.error(err);
         });
+        setUrlQuery('domain', newName || name);
     }, [name, type, loading, setGroups, setLoading, setQueryed]);
 
     const handleNameChange = useCallback((newName) => {
@@ -40,6 +42,14 @@ export function App () {
         setType(newType);
         queryDns(newType);
     }, [setType, queryDns]);
+
+    useEffect(() => {
+        const domain = getUrlQuery('domain');
+        if (domain) {
+            queryDns(type, domain);
+            setName(domain);
+        }
+    }, []);
 
     return html`
         <div class="container">

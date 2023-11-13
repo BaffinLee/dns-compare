@@ -33,7 +33,7 @@ export const DOH_JSON_SERVERS = {
     },
     'TWNIC': {
         name: 'TWNIC',
-        api: 'https://dns.twnic.tw/dns-query',
+        api: 'https://101.101.101.101/dns-query',
         website: 'https://twnic.tw',
         color: '#f2ffd9',
     },

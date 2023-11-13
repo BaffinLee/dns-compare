@@ -23,6 +23,7 @@ export function Input(props) {
             onKeyDown=${handleKeyDown}
             value=${props.value}
             class="name-input"
+            autofocus
         />
     `;
 }
